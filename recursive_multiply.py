@@ -37,5 +37,10 @@ def recursive_multiply_aux(a,b):
 if __name__ == "__main__":
     import numpy as np
     tests = [ (recursive_multiply(i,j), i*j) for i in range(0,60) for j in range(1,60)]
-    
+    results = np.array(list(map((lambda x:x[0]==x[1]),tests)))
+    if results.all() == True:
+        print("All tests passed")
+    else:
+        print("All tests did not pass")
+
 
