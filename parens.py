@@ -17,7 +17,7 @@ def parens(n):
 def parens_aux(s,l,r):
     s = s[:]
     if s == []:
-        return parens_aux([['(']],l-1,r) + parens_aux([[')']],l,r-1)
+        return parens_aux([['(']],l-1,r)
     if (l == 0) and (r == 0):
         return s[:]
     else:
@@ -28,8 +28,26 @@ def parens_aux(s,l,r):
                 return parens_aux([s[-1][:]+['(']], l-1, r)
             if (r > 0):
                 return parens_aux([s[-1][:]+[')']], l, r-1)
-    return s[:]
+    return s
 
+def parens_better(n):
+    p = []
+    parens_better_aux(p,['' for i in range(n*2)],n,n,0)
+    p_joined = [''.join(e) for e in p]
+    return p_joined
+
+def parens_better_aux(p,s,l,r,i):
+    if (l < 0) or (r < 0):
+        return
+    if (l == 0) and (r == 0):
+        p.append(s[:])
+    else:
+        s[i] = '('
+        parens_better_aux(p, s, l-1, r, i+1)
+        if r > l:
+            s[i] = ')'
+            parens_better_aux(p, s, l, r-1, i+1)
+    
 def check_valid(s):
     if s == ['']:
         return False
