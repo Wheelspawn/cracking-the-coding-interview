@@ -151,17 +151,24 @@ class Graph(object):
     
         
 class Node(object):
-    def __init__(self,name="",e=None,nodes=[],pred=None):
+    def __init__(self,name="",e=None,nodes=[],pred=None,parent=None,marked=False):
         self.name=name
         self.e=e
         self.nodes = nodes[:]
         self.pred = pred
+        self.parent = parent
+        self.marked = marked
         
     def __repr__(self):
         return str(self.name)
     
+    def add_children(self,cs):
+        for c in cs:
+            self.add_child(c)
+    
     def add_child(self,c):
         self.nodes.append(c)
+        c.parent = self
 
 class BSTNode(object):
     def __init__(self,name="",e=None,left=None,right=None,parent=None,marked=False):
