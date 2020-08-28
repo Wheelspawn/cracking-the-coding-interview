@@ -17,22 +17,31 @@ def bst_sequences_aux(root):
         right = bst_sequences_aux(root.right)
         
         l_all = []
-        # print(left)
-        # print(right)
         
         for l in left:
             for r in right:
                 for i in insert_all(l[:],r[:]):
-                    print(l,r)
                     l_all.append([root]+i)
         return l_all
         
     elif root.left != None and root.right == None:
-        print('ABCDEFG')
-        pass
+        left = bst_sequences_aux(root.left)
+        
+        l_all = []
+        
+        for l in left:
+            l_all.append([root]+l)
+        return l_all
+        
     elif root.left == None and root.right != None:
-        print('ABCDEFG')
-        pass
+        right = bst_sequences_aux(root.right)
+        
+        l_all = []
+        
+        for r in right:
+            l_all.append([root]+r)
+        return l_all
+    
     else:
         return [[root]]
     
