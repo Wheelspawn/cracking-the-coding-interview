@@ -178,7 +178,8 @@ class BSTNode(object):
         self.right=right
         self.parent = parent
         self.marked = marked
-        
+        self.size = 1
+            
     def __repr__(self):
         return str(self.name)
     
@@ -215,13 +216,122 @@ class BSTNode(object):
             l[0].parent = self
         if l[1] != None:
             l[1].parent = self
+            
+    def get_nodes_inorder(self):
+        '''
+        if (self.left == None and self.right == None):
+            return [self]
+        elif (self.left != None and self.right == None):
+            return [self] + self.left.get_nodes_inorder()
+        elif (self.left == None and self.right != None):
+            return [self] + self.right.get_nodes_inorder()
+        else:
+            return self.left.get_nodes_inorder() + [self] + self.right.get_nodes_inorder()
+        '''
+            
+        if (self.left == None and self.right == None):
+            return [self]
+        elif (self.left != None and self.right == None):
+            return [self] + self.left.get_nodes_inorder()
+        elif (self.left == None and self.right != None):
+            return [self] + self.right.get_nodes_inorder()
+        else:
+            return self.left.get_nodes_inorder() + [self] + self.right.get_nodes_inorder()
+        
     
     def print_all(self):
         if self.left != None:
             self.left.print_all()
-        print(self.name, end=" ")
+        print(self.e, end=" ")
         if self.right != None:
             self.right.print_all()
+    
+    def insert(self,n):
+        if n < self.e:
+            if self.left == None:
+                new = BSTNode(e=n)
+                self.left = new
+                new.parent = self
+                new.parent.increment_size()
+                
+            else:
+                self.left.insert(n)
+        else:
+            if self.right == None:
+                new = BSTNode(e=n)
+                self.right = new
+                new.parent = self
+                new.parent.increment_size()
+            else:
+                self.right.insert(n)
+                
+    def increment_size(self):
+        self.size += 1
+        if self.parent != None:
+            self.parent.increment_size()
             
+    def find(self,e):
+        if self == None:
+            return None
+        else:
+            if self.e == e:
+                return self
+            elif e < self.e:
+                return self.left.find(e)
+            else:
+                return self.right.find(e)
+    
+    def delete(self,n):
+        pass
+    
+    def get_random_node(self):
+        r =  random.randint(1,self.size)
+        if r == 1:
+            return self
+        else:
+            if self.left != None and self.right == None:
+                return self.left.get_random_node()
+            if self.left == None and self.right != None:
+                return self.right.get_random_node()
+            else:
+                r = random.randint(1,self.size-1)
+                if self.right.size >= r:
+                    return self.right.get_random_node()
+                else:
+                    return self.left.get_random_node()
+        
     def __repr__(self):
         return str(self.e)
+
+if __name__ == "__main__":
+    
+    a = BSTNode(e=8)
+    a.insert(3)
+    a.insert(2)
+    a.insert(5)
+    a.insert(6)
+    a.insert(7)
+    a.insert(1)
+    a.insert(4)
+    
+    a.insert(12)
+    a.insert(10)
+    a.insert(15)
+    a.insert(14)
+    a.insert(13)
+    a.insert(9)
+    a.insert(11)
+    
+    l = []
+    
+    for i in range(100000):
+        l.append(a.get_random_node().e)
+    print('Distribution of nodes from get_random_node:')
+    print(np.bincount(l))
+
+
+
+
+
+
+

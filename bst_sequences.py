@@ -95,36 +95,19 @@ def insert_all_aux(a,e):
         new_a.insert(i,e)
         l.append(new_a)
     return l
+
+if __name__ == "__main__":
     
-a = BSTNode(e=2)
-b = BSTNode(e=1)
-c = BSTNode(e=3)
-a.left = b
-a.right = c
-
-bst_sequences(a)
-
-'''
-print("~")
-
-d = BSTNode(e=4)
-c.right=d
-
-bst_sequences(a)
-print("~")
-
-a = BSTNode(e=8)
-b = BSTNode(e=3)
-c = BSTNode(e=9)
-d = BSTNode(e=1)
-e = BSTNode(e=4)
-f = BSTNode(e=5)
-
-a.left = b
-a.right = c
-b.left = d
-b.right = e
-e.right = f
-
-bst_sequences(a)
-'''
+    a = BSTNode(e=4)
+    b = BSTNode(e=2)
+    c = BSTNode(e=5)
+    d = BSTNode(e=1)
+    e = BSTNode(e=3)
+    a.left = b
+    a.right = c
+    b.left = d
+    b.right = e
+    
+    for e in bst_sequences(a):
+        print(e)
+    
