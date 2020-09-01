@@ -8,23 +8,36 @@ Created on Sun Aug 30 17:12:23 2020
 
 from tree import BSTNode
 
-def paths_with_sum(root,n):
-    pass
+def paths_with_sum(root,d,n):
+    l = []
+    for e in d:
+        if d[e] == n:
+            m = [e[1]]
+            parent = m[0].parent
+            while (parent != e[0].parent):
+                m.append(parent)
+                parent = parent.parent
+            l.append(list(reversed(m)))
+    return l
 
-def compute_paths(node,root,d,n):
+def compute_path_sums(node,d):
     
     if node.parent != None:
+        d[(node.parent,node)] = node.e + node.parent.e
+        
         if node.parent.parent != None:
-            d[(root.e,node.e)] = node.e + d[(root.e,node.parent.e)]
-        else:
-            d[(root.e,node.e)] = node.e + node.parent.e
-    
-    if (node.left == None) and (node.right == None):
-        pass
+            path_dist = d[(node.parent,node)]
+            
+            parent = node.parent
+            while parent.parent != None:
+                path_dist += d[(parent.parent,parent)] - parent.e
+                d[(parent.parent,node)] = path_dist
+                parent = parent.parent
+            
     if node.left != None:
-        compute_paths(node.left,root,d,n)
+        compute_path_sums(node.left,d)
     if node.right != None:
-        compute_paths(node.right,root,d,n)
+        compute_path_sums(node.right,d)
 
 if __name__ == "__main__":
     
@@ -39,7 +52,8 @@ if __name__ == "__main__":
     a.insert(10)
     
     d={}
-    compute_paths(a,a,d,0)
+    compute_path_sums(a,d)
     for thing in d:
         print(thing, d[thing])
+    
     
