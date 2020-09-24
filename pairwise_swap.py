@@ -17,7 +17,7 @@ def pairwise_swap(a):
     return ((a & even) << 1) + ((a & odd) >> 1)
 
 def pairwise_swap_2(a): # no iteration
-    return ((a & 0x55555555) << 1) + ((a & 0xaaaaaaaa) >> 1)
+    return ((a & 0x55555555) << 1) + (((a & 0xaaaaaaaa) % 0x100000000) >> 1)
 
 if __name__ == "__main__":
     
