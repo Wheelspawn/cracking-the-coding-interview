@@ -23,10 +23,16 @@ class DoublyLinkedList(object):
         return str(self.l)
     
 class DoublyLinkedListNode(object):
-    def __init__(self,e,prevnode=None,nextnode=None):
+    def __init__(self,e,prevnode=None,nextnode=None,visited=False):
         self.e = e
         self.prevnode = prevnode
         self.nextnode = nextnode
+        self.visited = visited
+        
+    def reset(self):
+        self.visited = False
+        if (self.nextnode != None) and (self.nextnode.visited==True):
+            self.nextnode.reset()
     
     def __repr__(self):
         return str(self.e)
