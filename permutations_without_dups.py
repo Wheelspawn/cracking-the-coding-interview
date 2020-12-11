@@ -19,18 +19,18 @@ def perms_without_dups(s):
         for perm in perms_without_dups(s[1:]):
             for i in range(len(perm)+1):
                 p.append(perm[:i]+c+perm[(i):])
-        return set(p)
+        return p
 
 if __name__ == "__main__":
     import numpy as np
     tests = []
     chars = list(string.ascii_uppercase + string.ascii_lowercase)
-    for i in range(0,100):
+    for i in range(0,50):
         random.shuffle(chars)
-        test = ''.join(chars[0:random.randint(1,10)])
-        tests.append( ( test, set([''.join(p) for p in itertools.permutations(test)]) ))
+        test = ''.join(chars[0:random.randint(1,8)])
+        tests.append( ( test, sorted([''.join(p) for p in itertools.permutations(test)]) ) )
     
-    results = np.array([perms_without_dups(tests[i][0]) == tests[i][1] for i in range(len(tests))])
+    results = np.array([sorted(perms_without_dups(tests[i][0])) == tests[i][1] for i in range(len(tests))])
     if results.all() == True:
         print("All tests passed")
     else:
